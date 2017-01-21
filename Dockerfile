@@ -1,6 +1,6 @@
 # Mapserver for Docker
-FROM ubuntu:trusty
-MAINTAINER Admire Nyakudya<admire@kartoza.com>
+FROM ubuntu:yakkety
+MAINTAINER Evgeny Cherkashin<eugeneai@irnok.net>
 
 ENV LANG C.UTF-8
 RUN update-locale LANG=C.UTF-8
@@ -13,7 +13,8 @@ RUN apt-get -qq update --fix-missing && apt-get -qq --yes upgrade
 #-------------Application Specific Stuff ----------------------------------------------------
 
 # Install mapcache compilation prerequisites
-RUN apt-get install -y software-properties-common g++ make cmake wget git  bzip2 apache2 apache2-threaded-dev curl apache2-mpm-worker
+RUN apt-get install -y software-properties-common g++ make cmake wget git  bzip2 \
+    apache2 apache2-dev curl 
 
 # Install mapcache dependencies provided by Ubuntu repositories
 RUN apt-get install -y \
@@ -42,16 +43,23 @@ RUN /setup.sh
 RUN cp  /tmp/resources/000-default.conf /etc/apache2/sites-available/
 
 # To be able to install libapache.
-RUN echo 'deb http://archive.ubuntu.com/ubuntu trusty multiverse' >> /etc/apt/sources.list
-RUN echo 'deb http://archive.ubuntu.com/ubuntu trusty-updates multiverse' >> /etc/apt/sources.list
-RUN echo 'deb http://security.ubuntu.com/ubuntu trusty-security multiverse' >> /etc/apt/sources.list
-RUN  apt-get update
+RUN echo
+
+# RUN echo 'deb http://archive.ubuntu.com/ubuntu yakkety multiverse' >> /etc/apt/sources.list
+# RUN echo 'deb http://archive.ubuntu.com/ubuntu yakkety-updates multiverse' >> /etc/apt/sources.list
+# RUN echo 'deb http://security.ubuntu.com/ubuntu yakkety-security multiverse' >> /etc/apt/sources.list
+# RUN  apt-get update
 
 # Install PHP5 and necessary modules
-RUN  apt-get install -y libapache2-mod-fastcgi php5-fpm libapache2-mod-php5 php5-common php5-cli php5-fpm php5
+RUN  apt-get install -y libapache2-mod-fastcgi php-fpm \
+     libapache2-mod-php php-common php-cli php-fpm php
+
+# Disable these Apache modules
+# Already disabled
+# RUN  a2dismod mpm_event
 
 # Enable these Apache modules
-RUN  a2enmod actions cgi alias
+RUN  a2enmod actions cgi alias 
 
 # Apache configuration for PHP-FPM
 RUN cp /tmp/resources/php5-fpm.conf /etc/apache2/conf-available/

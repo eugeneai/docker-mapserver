@@ -1,2 +1,2 @@
 #bin/bash
-docker build -t kartoza/mapserver .
+docker build -t eugeneai/mapserver .

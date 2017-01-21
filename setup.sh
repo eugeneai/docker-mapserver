@@ -2,13 +2,13 @@
 
 #Install libharfbuzz from source as it is not in a repository
 
-VERSION=harfbuzz-0.9.19.tar.bz2
-if [ ! -f /tmp/resources/harfbuzz-0.9.19.tar.bz2 ]; then \
-    wget http://www.freedesktop.org/software/harfbuzz/release/harfbuzz-0.9.19.tar.bz2 -P /tmp/resources/; \
+VERSION=harfbuzz-1.2.7.tar.bz2
+if [ ! -f /tmp/resources/harfbuzz-1.2.7.tar.bz2 ]; then \
+    wget http://www.freedesktop.org/software/harfbuzz/release/harfbuzz-1.2.7.tar.bz2 -P /tmp/resources/; \
     fi; \
     cd /tmp/resources &&\
-    tar xjf harfbuzz-0.9.19.tar.bz2  &&\
-    cd harfbuzz-0.9.19 && \
+    tar xjf harfbuzz-1.2.7.tar.bz2  &&\
+    cd harfbuzz-1.2.7 && \
     ./configure  && \
     make  && \
     make install  && \
